@@ -1,0 +1,57 @@
+import tkinter as tk
+from tkinter import ttk
+
+#Parre Lógca/estrutural
+raiz = tk.Tk()
+raiz.title("Calculadora de IMC")
+raiz.geometry("400x400")
+quadro = ttk.Frame(raiz)
+quadro.place(relx=0.5, rely=0.5, anchor="center")
+texto = ttk.Label(quadro, text="Calcule aqui seu IMC")
+texto.grid(row="0", column="1") 
+
+#Entrada de Dados
+entradaPeso = ttk.Entry(quadro, width="25")
+entradaPeso.grid(row=2, column=1, pady=5)
+entradaPeso.insert(0, "")
+
+entradaAltura = ttk.Entry(quadro, width="25")
+entradaAltura.grid(row=3, column=1, pady=5)
+entradaAltura.insert(0,"")
+
+indicador1 = ttk.Label(quadro, text="Peso em Quilos:")
+indicador1.grid(row=2, column=0)
+
+indicador2 = ttk.Label(quadro, text="Altura em Metros:")
+indicador2.grid(row=3, column=0)
+
+resultado = ttk.Label(quadro, text="")
+resultado.grid(row=5,column=1, pady=5)
+
+#Definindo operadores e tratamento de dados
+
+def calculoIMC():
+    try:
+        peso = float(entradaPeso.get())
+        altura = float(entradaAltura.get())
+        imc = peso / (altura **2)
+        
+        if imc <18.5:
+            mensagem = f"Você está abaixo do peso, IMC: {imc:.2f}"
+        elif imc <= 24.9:
+            mensagem = f"Seu Peso está normal, IMC: {imc:.2f}"
+        elif imc <= 29.9:
+            mensagem = f"Sobrepeso!, IMC: {imc:.2f}"
+        elif imc > 30:
+            mensagem = f"Obesidade, IMC: {imc:.2f}"
+        else:
+            mensagem = f"Dados inválidos! Favor tente novamente."
+    except ValueError:
+        mensagem = ("Por favor, Tente novamente e insira dados válidos")     
+    
+    resultado.config(text=mensagem)
+
+somarIMC = ttk.Button(quadro, text="SOMAR SEU IMC", command=calculoIMC)
+somarIMC.grid(row=4, column=1, pady=5)
+
+raiz.mainloop()
